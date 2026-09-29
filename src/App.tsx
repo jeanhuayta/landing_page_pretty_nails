@@ -3,10 +3,12 @@ import { FormEvent, useState } from 'react'
 const WHATSAPP_URL = 'https://wa.me/51940221473'
 
 const gallery = [
-  { src: '/WhatsApp Image 2026-09-28 at 22.29.41.jpeg', alt: 'Manicure con diseno en color nude', className: 'gallery-large' },
-  { src: '/WhatsApp Image 2026-09-28 at 22.29.40 (2).jpeg', alt: 'Diseno de unas artistico', className: '' },
-  { src: '/WhatsApp Image 2026-09-28 at 22.29.40.jpeg', alt: 'Manicure elegante', className: '' },
-  { src: '/WhatsApp Image 2026-09-28 at 22.29.41 (1).jpeg', alt: 'Unas con acabado brillante', className: 'gallery-wide' },
+  { src: '/WhatsApp Image 2026-09-28 at 22.29.37 (1).jpeg', alt: 'Pedicure frances sobre fondo rosa', name: 'French glow', type: 'Pedicure' },
+  { src: '/WhatsApp Image 2026-09-28 at 22.29.38.jpeg', alt: 'Pedicure rosa con detalle floral', name: 'Soft flower', type: 'Pedicure' },
+  { src: '/WhatsApp Image 2026-09-28 at 22.29.39.jpeg', alt: 'Uñas rosas con diseño de lunares', name: 'Pink details', type: 'Manicure' },
+  { src: '/WhatsApp Image 2026-09-28 at 22.29.40 (1).jpeg', alt: 'Uñas lilas con decoración', name: 'Lilac bloom', type: 'Manicure' },
+  { src: '/WhatsApp Image 2026-09-28 at 22.29.41 (2).jpeg', alt: 'Uñas rosas con flores y brillo', name: 'Garden shine', type: 'Manicure' },
+  { src: '/WhatsApp Image 2026-09-28 at 22.29.41 (3).jpeg', alt: 'Uñas naranjas de acabado brillante', name: 'Bold orange', type: 'Manicure' },
 ]
 
 function WhatsAppIcon() {
@@ -20,10 +22,15 @@ function ArrowIcon() {
 function App() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [sent, setSent] = useState(false)
+  const [expandedPhoto, setExpandedPhoto] = useState<number | null>(null)
 
   const goTo = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
     setMenuOpen(false)
+  }
+
+  const togglePhoto = (index: number) => {
+    setExpandedPhoto((current) => current === index ? null : index)
   }
 
   const submitForm = (event: FormEvent<HTMLFormElement>) => {
@@ -38,12 +45,12 @@ function App() {
     <header className="nav">
       <button className="brand" onClick={() => goTo('inicio')} aria-label="Ir al inicio">
         <img src="/logo.jpeg" alt="Logo de la marca" />
-        <span>Beauty nails</span>
+        <span>Pretty Nails</span>
       </button>
       <nav className="desktop-nav" aria-label="Navegacion principal">
         <button onClick={() => goTo('inicio')}>Inicio</button>
         <button onClick={() => goTo('servicios')}>Servicios</button>
-        <button onClick={() => goTo('galeria')}>Galeria</button>
+        <button onClick={() => goTo('galeria')}>Galería</button>
         <button className="nav-cta" onClick={() => goTo('contacto')}>Reserva tu cita</button>
       </nav>
       <button className={`menu-toggle ${menuOpen ? 'is-open' : ''}`} onClick={() => setMenuOpen(!menuOpen)} aria-label="Abrir menu" aria-expanded={menuOpen}><i /><i /></button>
@@ -52,15 +59,15 @@ function App() {
     <div className={`mobile-menu ${menuOpen ? 'show' : ''}`}>
       <button onClick={() => goTo('inicio')}>Inicio</button>
       <button onClick={() => goTo('servicios')}>Servicios</button>
-      <button onClick={() => goTo('galeria')}>Galeria</button>
+      <button onClick={() => goTo('galeria')}>Galería</button>
       <button onClick={() => goTo('contacto')}>Contacto</button>
     </div>
 
     <section id="inicio" className="hero section-pad">
       <div className="hero-copy">
-        <p className="eyebrow">Manicure · Diseno · Cuidado</p>
-        <h1>Unas que hablan <em>de ti.</em></h1>
-        <p className="hero-text">Detalles delicados, disenos que se sienten tuyos y un momento solo para consentirte.</p>
+        <p className="eyebrow">Manicure · Diseño · Cuidado</p>
+        <h1>Uñas que hablan <em>de ti.</em></h1>
+        <p className="hero-text">Detalles delicados, diseños que se sienten tuyos y un momento solo para consentirte.</p>
         <div className="hero-actions">
           <button className="button dark" onClick={() => goTo('contacto')}>Reserva tu cita <ArrowIcon /></button>
           <a className="text-link" href={WHATSAPP_URL} target="_blank" rel="noreferrer">Escribeme por WhatsApp <ArrowIcon /></a>
@@ -68,7 +75,7 @@ function App() {
       </div>
       <div className="hero-image">
         <img src="/WhatsApp Image 2026-09-28 at 22.29.40 (3).jpeg" alt="Manicure profesional" />
-        <div className="floating-note"><strong>Tu proxima<br />obsesion</strong><span>Desde la primera cita</span></div>
+        <div className="floating-note"><strong>Tu próxima<br />obsesión</strong><span>Desde la primera cita</span></div>
       </div>
       <div className="hero-detail"><span>Beauty, en<br />cada detalle</span><span className="scroll-mark">Desliza para explorar ↓</span></div>
     </section>
@@ -77,30 +84,30 @@ function App() {
       <div className="section-intro"><p className="eyebrow">Elige tu momento</p><h2>Todo empieza en <em>tus manos.</em></h2></div>
       <div className="service-list">
         <article><span>01</span><div><h3>Manicure</h3><p>Un acabado limpio, cuidado y hecho para ti.</p></div><button onClick={() => goTo('contacto')} aria-label="Reservar manicure"><ArrowIcon /></button></article>
-        <article><span>02</span><div><h3>Disenos personalizados</h3><p>Color, textura y detalles que cuentan tu estilo.</p></div><button onClick={() => goTo('contacto')} aria-label="Reservar diseno"><ArrowIcon /></button></article>
-        <article><span>03</span><div><h3>Uñas con estilo</h3><p>Una manicura especial para verte y sentirte increible.</p></div><button onClick={() => goTo('contacto')} aria-label="Reservar unas con estilo"><ArrowIcon /></button></article>
+        <article><span>02</span><div><h3>Diseños personalizados</h3><p>Color, textura y detalles que cuentan tu estilo.</p></div><button onClick={() => goTo('contacto')} aria-label="Reservar diseño"><ArrowIcon /></button></article>
+        <article><span>03</span><div><h3>Uñas con estilo</h3><p>Una manicura especial para verte y sentirte increíble.</p></div><button onClick={() => goTo('contacto')} aria-label="Reservar uñas con estilo"><ArrowIcon /></button></article>
       </div>
     </section>
 
     <section id="galeria" className="gallery section-pad">
       <div className="gallery-head"><div><p className="eyebrow">Mi trabajo</p><h2>Pequenas obras<br /><em>de arte.</em></h2></div><p>Cada set tiene su propia energia.<br />Encuentra el que va contigo.</p></div>
-      <div className="gallery-grid">{gallery.map((photo) => <figure key={photo.src} className={photo.className}><img src={photo.src} alt={photo.alt} /></figure>)}</div>
+      <div className="gallery-grid">{gallery.map((photo, index) => <figure key={photo.src} className={expandedPhoto === index ? 'is-expanded' : ''} tabIndex={0} role="button" aria-pressed={expandedPhoto === index} onClick={() => togglePhoto(index)} onKeyDown={(event) => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); togglePhoto(index) } }}><img src={photo.src} alt={photo.alt} /><figcaption><span>0{index + 1} · {photo.type}</span><strong>{photo.name}</strong></figcaption></figure>)}</div>
     </section>
 
     <section id="contacto" className="contact section-pad">
-      <div className="contact-image"><img src="/WhatsApp Image 2026-09-28 at 22.29.37.jpeg" alt="Detalle de unas terminadas" /></div>
-      <div className="contact-content"><p className="eyebrow">Reserva tu espacio</p><h2>Hagamos realidad<br /><em>tu proximo set.</em></h2><p>Cuéntame qué tienes en mente y coordinamos tu cita por WhatsApp.</p>
+      <div className="contact-image"><img src="/WhatsApp Image 2026-09-28 at 22.29.37.jpeg" alt="Detalle de uñas terminadas" /></div>
+      <div className="contact-content"><p className="eyebrow">Reserva tu espacio</p><h2>Hagamos realidad<br /><em>tu próximo set.</em></h2><p>Cuéntame qué tienes en mente y coordinamos tu cita por WhatsApp.</p>
         <form onSubmit={submitForm}>
           <label>Nombre<input name="name" required placeholder="Como te llamas" /></label>
-          <div className="form-row"><label>Servicio<select name="service" defaultValue=""><option value="" disabled>Elige un servicio</option><option>Manicure</option><option>Diseno personalizado</option><option>Uñas con estilo</option><option>Quiero asesoramiento</option></select></label><label>Fecha ideal<input name="date" type="date" /></label></div>
-          <label>Mensaje<textarea name="message" placeholder="Cuentame el estilo que buscas" rows={3} /></label>
+          <div className="form-row"><label>Servicio<select name="service" defaultValue=""><option value="" disabled>Elige un servicio</option><option>Manicure</option><option>Diseño personalizado</option><option>Uñas con estilo</option><option>Quiero asesoramiento</option></select></label><label>Fecha ideal<input name="date" type="date" /></label></div>
+          <label>Mensaje<textarea name="message" placeholder="Cuéntame el estilo que buscas" rows={3} /></label>
           <button className="button dark form-button" type="submit">Enviar por WhatsApp <WhatsAppIcon /></button>
           {sent && <span className="form-success">Tu mensaje esta listo en WhatsApp.</span>}
         </form>
       </div>
     </section>
 
-    <footer><div className="footer-brand"><img src="/logo.jpeg" alt="" /><span>Beauty nails</span></div><p>Hecho con dedicacion para tus manos.</p><a href={WHATSAPP_URL} target="_blank" rel="noreferrer"><WhatsAppIcon /> 940 221 473</a></footer>
+    <footer><div className="footer-brand"><img src="/logo.jpeg" alt="" /><span>Pretty Nails</span></div><p>Hecho con dedicación para tus manos.</p><a href={WHATSAPP_URL} target="_blank" rel="noreferrer"><WhatsAppIcon /> 940 221 473</a></footer>
     <a className="whatsapp-float" href={WHATSAPP_URL} target="_blank" rel="noreferrer" aria-label="Abrir WhatsApp"><WhatsAppIcon /></a>
   </main>
 }
